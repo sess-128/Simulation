@@ -1,5 +1,7 @@
 package simulation;
 
+import simulation.Entitys.Entity;
+
 public class MapRender {
 
     public static final int ROWS = 15, COLUMNS = 15;

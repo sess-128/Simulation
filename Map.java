@@ -1,5 +1,7 @@
 package simulation;
 
+import simulation.Entitys.Entity;
+
 import java.util.HashMap;
 
 public class Map {
