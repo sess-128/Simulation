@@ -1,5 +1,6 @@
-package simulation;
+package simulation.Map;
 
+import simulation.Coordinates;
 import simulation.Entitys.*;
 
 import java.util.HashMap;
@@ -20,21 +21,23 @@ public class Map {
         map.put(new Coordinates(3, 2), new Herbivore(Type.Herbivore));
         map.put(new Coordinates(5, 3), new Rock(Type.Rock));
         map.put(new Coordinates(7, 4), new Grass(Type.Grass));
-        map.put(new Coordinates(8, 10), new Tree(Type.Tree));
-
+        map.put(new Coordinates(8, 7), new Tree(Type.Tree));
     }
 
     public void removeEntity(Coordinates coordinates) {
         map.remove(coordinates);
     }
 
-    public Entity getEntityByCoordinates(Coordinates coordinates) {
+    public Entity getEntityByCoordinates (Coordinates coordinates) {
         return map.get(coordinates);
     }
 
-    public boolean isEmptyCoordinate(Coordinates coordinates) {
+
+
+    public boolean isEmptyCoordinates(Coordinates coordinates) {
         return !map.containsKey(coordinates);
     }
+
 
 
 }

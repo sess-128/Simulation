@@ -1,6 +1,9 @@
 package simulation.Entitys;
 
 import simulation.Coordinates;
+import simulation.CoordinatesShift;
+
+import java.util.Set;
 
 public abstract class Creature extends Entity{
     private int speed;
@@ -10,6 +13,8 @@ public abstract class Creature extends Entity{
         super(type);
     }
 
+    public abstract void makeMove();
+    public abstract Set<CoordinatesShift> moves ();
 
-    public abstract void makeMove() ;
+
 }
