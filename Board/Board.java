@@ -1,30 +1,36 @@
 package CloneSim.Board;
 
 import CloneSim.Coordinates;
-import CloneSim.Entities.Grass;
-import CloneSim.Entities.Tree;
-import CloneSim.Factories.Entity;
+import CloneSim.Entities.Creature;
+import CloneSim.Entities.Entity;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class Board {
     private static final int STANDARD_WIDTH = 10, STANDARD_HEIGHT = 10;
     private final int width;
     private final int height;
-    private final HashMap<Coordinates, Entity> map;
+
+    public HashMap<Coordinates, Entity> getBoard() {
+        return board;
+    }
+
+    private final HashMap<Coordinates, Entity> board;
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        this.map = new HashMap<>();
+        this.board = new HashMap<>();
     }
 
     public Board() {
         this.width = STANDARD_WIDTH;
         this.height = STANDARD_HEIGHT;
-        this.map = new HashMap<>();
+        this.board = new HashMap<>();
     }
 
     public int getHeight() {
@@ -36,27 +42,32 @@ public class Board {
     }
 
     public void add(Coordinates coordinates, Entity entity) {
-        map.put(coordinates, entity);
+        board.put(coordinates, entity);
     }
 
     public void remove(Coordinates coordinates) {
-        map.remove(coordinates);
+        board.remove(coordinates);
     }
 
     public Entity getEntity(Coordinates coordinates) {
-        return map.get(coordinates);
+        return board.get(coordinates);
     }
 
     public boolean isEmptyCoordinates(Coordinates coordinates) {
-        return !map.containsKey(coordinates);
-    }
-
-    public void setStartPosition() {
-        map.put(new Coordinates(2, 2), new Grass());
-        map.put(new Coordinates(3, 1), new Tree());
+        return !board.containsKey(coordinates);
     }
 
     public Collection<Entity> getEntities() {
-        return map.values();
+        return board.values();
+    }
+
+    public List<Creature> getCreatures(){
+        List<Creature> creatures = new ArrayList<>();
+        for (Entity entity : board.values()){
+            if (entity instanceof Creature){
+                creatures.add((Creature) entity);
+            }
+        }
+        return creatures;
     }
 }

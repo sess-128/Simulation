@@ -1,4 +1,4 @@
-package CloneSim.Factories;
+package CloneSim.Entities;
 
 public abstract class Entity {
     protected EntityType type;

@@ -1,7 +1,11 @@
 package CloneSim.Entities;
 
-import CloneSim.Factories.Creature;
-import CloneSim.Factories.EntityType;
+import CloneSim.Board.Board;
+import CloneSim.Coordinates;
+import CloneSim.CoordinatesShift;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Predator extends Creature {
     private final EntityType target = EntityType.HERBIVORE;
@@ -10,9 +14,19 @@ public class Predator extends Creature {
         super(EntityType.PREDATOR, health, speed);
         this.power = power;
     }
+    @Override
+    protected Set<CoordinatesShift> getCreatureMoves() {
+        Set<CoordinatesShift> result = new HashSet<>();
+        for (int i = -1; i <= 1; i++) {
+            if (i == 0) continue;
+            result.add(new CoordinatesShift(i, i));
+            result.add(new CoordinatesShift(i,-i));
+        }
+        return result;
+    }
 
     @Override
-    protected void makeMove() {
-
+    protected boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
+        return  (board.isEmptyCoordinates(coordinates) || board.getEntity(coordinates).type.equals(target));
     }
 }

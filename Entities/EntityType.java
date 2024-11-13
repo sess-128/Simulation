@@ -1,4 +1,4 @@
-package CloneSim.Factories;
+package CloneSim.Entities;
 
 public enum EntityType {
     GRASS, ROCK, TREE, HERBIVORE, PREDATOR

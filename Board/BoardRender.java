@@ -1,9 +1,9 @@
 package CloneSim.Board;
 
 import CloneSim.Coordinates;
-import CloneSim.Factories.Entity;
+import CloneSim.Entities.Entity;
 
-public class MapRender {
+public class BoardRender {
     public static final String EMPTY = "\uD83D\uDFEB";
     public static final String HERBIVORE_PICTURE = "\uD83D\uDE07";
     public static final String PREDATOR_PICTURE = "\uD83D\uDC7F";
