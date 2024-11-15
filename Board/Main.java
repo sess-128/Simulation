@@ -2,7 +2,6 @@ package CloneSim.Board;
 
 import CloneSim.Actions.InitActions.FillMap;
 import CloneSim.Actions.TurnActions.RefillAction;
-import CloneSim.Coordinates;
 import CloneSim.Entities.Creature;
 
 public class Main {
@@ -20,9 +19,10 @@ public class Main {
                 creature.makeMove(board);
             }
             refillAction.interact();
-            render.show(board);
             System.out.println("----------");
-            Thread.sleep(100);
+            render.show(board);
+
+            Thread.sleep(1000);
         }
 
 

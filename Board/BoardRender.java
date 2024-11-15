@@ -15,7 +15,7 @@ public class BoardRender {
         int ROWS = board.getHeight();
         int COLUMNS = board.getWidth();
 
-        for (int row = ROWS; row >= 0; row--) {
+        for (int row = ROWS - 1; row >= 0; row--) {
             StringBuilder line = new StringBuilder();
             for (int col = 0; col < COLUMNS; col++) {
                 Coordinates coordinates = new Coordinates(row, col);

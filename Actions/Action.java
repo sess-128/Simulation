@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Random;
 
 public abstract class Action {
+    private final Random random = new Random();
     protected final Board board;
 
     public Action(Board board) {
@@ -15,15 +16,21 @@ public abstract class Action {
     }
 
     protected abstract void interact();
-    protected void fill(Collection<Entity> entities){
+
+    protected void fill(Collection<Entity> entities) {
         for (Entity entity : entities) {
-            Random random = new Random();
-            int randomRow = random.nextInt(board.getHeight() + 1);
-            int randomColumn = random.nextInt(board.getWidth() + 1);
-            Coordinates randomCoordinates = new Coordinates(randomRow, randomColumn);
-            if (board.isEmptyCoordinates(randomCoordinates)) {
-                board.add(randomCoordinates, entity);
-            } else System.out.println("Ячейка занята");
+
+            Coordinates randomed = getRandomCoordinates();
+
+            while (board.isEmptyCoordinates(randomed)) {
+                board.add(randomed, entity);
+            }
         }
+    }
+
+    private Coordinates getRandomCoordinates(){
+        int randomRow = random.nextInt(board.getHeight());
+        int randomColumn = random.nextInt(board.getWidth());
+        return new Coordinates(randomRow,randomColumn);
     }
 }

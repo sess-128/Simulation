@@ -33,7 +33,7 @@ public class Board {
         this.board = new HashMap<>();
     }
 
-    public int getHeight() {
+    public int  getHeight() {
         return height;
     }
 

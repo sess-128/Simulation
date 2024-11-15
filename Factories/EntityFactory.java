@@ -23,7 +23,6 @@ public class EntityFactory {
     public Collection<Entity> makeMoreEntities(EntityType type, int count){
 
         Collection<Entity> entities = new ArrayList<>();
-
         for (int i = 0; i < count; i++) {
             entities.add(makeEntity(type));
         }
