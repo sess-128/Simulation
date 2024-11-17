@@ -31,13 +31,16 @@ public abstract class Creature extends Entity {
     protected abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
     protected abstract Set<CoordinatesShift> getCreatureMoves();
     private Coordinates getCurrentCoordinates(Board board) {
+        Coordinates current = new Coordinates(0,0);
         for (Coordinates coordinates : board.getBoard().keySet()) {
             if (board.getBoard().get(coordinates) == this) {
-                return coordinates;
+                current = coordinates;
+                return current;
             }
         }
-        return new Coordinates(-1, -1);
+        return current;
     }
+
     private Coordinates getRandomMove(Set<Coordinates> availableMoves, Board board) {
         Random random = new Random();
         if (availableMoves.size() == 0) return this.getCurrentCoordinates(board);
