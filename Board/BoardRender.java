@@ -29,6 +29,7 @@ public class BoardRender {
             }
             System.out.println(line);
         }
+
     }
 
     private String colorizeEntity(Entity entity) {

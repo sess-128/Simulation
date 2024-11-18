@@ -10,9 +10,16 @@ public class MainTest {
     public static void main(String[] args) throws InterruptedException {
 
         Simulation simulation = new Simulation();
-        simulation.startSimulation();
-
-
+        Menu menu = new Menu(simulation);
+        menu.start();
+//        simulation.startSimulation();
+//
+//
+//        Thread.sleep(10000);
+//
+//        simulation.pauseSimulation();
+//        Thread.sleep(4000);
+//        simulation.resumeSimulation();
 
     }
 //        Board board = new Board();

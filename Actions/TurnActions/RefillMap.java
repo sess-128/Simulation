@@ -35,8 +35,8 @@ public class RefillMap extends Action {
 
         if (currentGrass <= GRASS_COUNT || currentHerbivore <= HERBIVORE_COUNT) {
             fill(entitiesToRefill);
-            System.out.println("Creating " + (GRASS_COUNT - currentGrass) + " Grass");
-            System.out.println("Creating " + (HERBIVORE_COUNT - currentHerbivore) + " Herbivore");
+//            System.out.println("Creating " + (GRASS_COUNT - currentGrass) + " Grass");
+//            System.out.println("Creating " + (HERBIVORE_COUNT - currentHerbivore) + " Herbivore");
         }
     }
 
