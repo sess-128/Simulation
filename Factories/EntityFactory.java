@@ -13,8 +13,8 @@ public class EntityFactory {
             case GRASS -> entity = new Grass();
             case ROCK -> entity = new Rock();
             case TREE -> entity = new Tree();
-            case HERBIVORE -> entity = new Herbivore(14, 2);
-            case PREDATOR -> entity = new Predator(10, 1, 2);
+            case HERBIVORE -> entity = new Herbivore(14, 4);
+            case PREDATOR -> entity = new Predator(10, 2, 2);
         }
 
         return entity;

@@ -9,8 +9,10 @@ import java.util.Random;
 import java.util.Set;
 
 public abstract class Creature extends Entity {
+    private static final int DEAD_HEALTH = 0;
     protected int health;
     protected int speed;
+    protected EntityType target;
 
     public Creature(EntityType type, int health, int speed) {
         super(type);
@@ -18,19 +20,24 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public void makeMove(Board map) {
-        Set<Coordinates> availableMoves = getAvailableMoves(map);
+    public void makeMove(Board board) {
 
-        Coordinates currentCoordinates = getCurrentCoordinates(map);
-        Coordinates newCoordinates = getRandomMove(availableMoves, map);
+        Set<Coordinates> availableMoves = getAvailableMoves(board);
 
-        map.remove(currentCoordinates);
-        map.remove(newCoordinates);
-        map.add(newCoordinates, this);
+        Coordinates currentCoordinates = getCurrentCoordinates(board);
+        Coordinates newCoordinates = getRandomMove(availableMoves, board);
+
+        board.remove(currentCoordinates);
+        board.remove(newCoordinates);
+        board.add(newCoordinates, this);
+
+        decrementHP();
+
+//        System.out.println("Сдвинулся с " + currentCoordinates + " на " + newCoordinates);
     };
     protected abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
     protected abstract Set<CoordinatesShift> getCreatureMoves();
-    private Coordinates getCurrentCoordinates(Board board) {
+    public Coordinates getCurrentCoordinates(Board board) {
         Coordinates current = new Coordinates(0,0);
         for (Coordinates coordinates : board.getBoard().keySet()) {
             if (board.getBoard().get(coordinates) == this) {
@@ -64,5 +71,49 @@ public abstract class Creature extends Entity {
             }
         }
         return availableMoves;
+    }
+    public void setTarget(EntityType target){
+        this.target = target;
+    }
+    public EntityType getTarget(){
+        return target;
+    }
+    public int getHealth() {
+        return health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    //TODO ЛОГИКА ЕДЫ
+
+    private Set<Coordinates> targetNear(Board board){
+        Set<Coordinates> targetCoordinates = new HashSet<>();
+
+        for (Coordinates coordinates: getAvailableMoves(board)){
+            if (board.getEntity(coordinates).type.equals(target)){
+                targetCoordinates.add(coordinates);
+            }
+        }
+        return targetCoordinates;
+    }
+    public void decrementHP(){
+        health--;
+    }
+    public void incrementHP(){
+        health++;
+    }
+
+    public boolean isDead(){
+        return health == DEAD_HEALTH;
+    }
+
+    private void eat(Board board){
+        if (targetNear(board).isEmpty()){
+            makeMove(board);
+        } else {
+
+        }
     }
 }

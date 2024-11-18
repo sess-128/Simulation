@@ -8,9 +8,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Herbivore extends Creature {
-    private final EntityType target = EntityType.GRASS;
+//    private final EntityType target = EntityType.GRASS;
     public Herbivore(int health, int speed) {
         super(EntityType.HERBIVORE, health, speed);
+        setTarget(EntityType.GRASS);
     }
 
     @Override

@@ -14,9 +14,9 @@ import java.util.Collection;
 import static CloneSim.Actions.InitActions.FillMap.GRASS_COUNT;
 import static CloneSim.Actions.InitActions.FillMap.HERBIVORE_COUNT;
 
-public class RefillAction extends Action {
+public class RefillMap extends Action {
 
-    public RefillAction(Board board) {
+    public RefillMap(Board board) {
         super(board);
     }
 
