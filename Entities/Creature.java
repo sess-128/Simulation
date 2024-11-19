@@ -21,22 +21,23 @@ public abstract class Creature extends Entity {
     }
 
     public void makeMove(Board board) {
+        for (int i = 0; i < speed; i++) {
+            Set<Coordinates> availableMoves = getAvailableMoves(board);
 
-        Set<Coordinates> availableMoves = getAvailableMoves(board);
+            Coordinates currentCoordinates = getCurrentCoordinates(board);
+            Coordinates newCoordinates = getRandomMove(availableMoves, board);
 
-        Coordinates currentCoordinates = getCurrentCoordinates(board);
-        Coordinates newCoordinates = getRandomMove(availableMoves, board);
+            board.remove(currentCoordinates);
+            board.remove(newCoordinates);
+            board.add(newCoordinates, this);
 
-        board.remove(currentCoordinates);
-        board.remove(newCoordinates);
-        board.add(newCoordinates, this);
-
-        decrementHP();
+            decrementHP();
+        }
 
 //        System.out.println("Сдвинулся с " + currentCoordinates + " на " + newCoordinates);
     };
     protected abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
-    protected abstract Set<CoordinatesShift> getCreatureMoves();
+    public abstract Set<CoordinatesShift> getCreatureMoves();
     public Coordinates getCurrentCoordinates(Board board) {
         Coordinates current = new Coordinates(0,0);
         for (Coordinates coordinates : board.getBoard().keySet()) {
@@ -55,7 +56,7 @@ public abstract class Creature extends Entity {
         int randomIndex = random.nextInt(availableMoves.size());
         return (Coordinates) availableMoves.toArray()[randomIndex];
     }
-    private Set<Coordinates> getAvailableMoves(Board board) {
+    public Set<Coordinates> getAvailableMoves(Board board) {
         Coordinates current = getCurrentCoordinates(board);
         Set<CoordinatesShift> shifts = getCreatureMoves();
         Set<Coordinates> availableMoves = new HashSet<>();
@@ -70,6 +71,7 @@ public abstract class Creature extends Entity {
                 }
             }
         }
+
         return availableMoves;
     }
     public void setTarget(EntityType target){

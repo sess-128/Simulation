@@ -15,7 +15,7 @@ public class Predator extends Creature {
         this.power = power;
     }
     @Override
-    protected Set<CoordinatesShift> getCreatureMoves() {
+    public Set<CoordinatesShift> getCreatureMoves() {
         Set<CoordinatesShift> result = new HashSet<>();
         for (int i = -1; i <= 1; i++) {
             if (i == 0) continue;

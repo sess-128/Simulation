@@ -3,6 +3,7 @@ package CloneSim.Board;
 import CloneSim.Coordinates;
 import CloneSim.Entities.Creature;
 import CloneSim.Entities.Entity;
+import CloneSim.Entities.Rock;
 
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class Board {
     }
 
     public Entity getEntity(Coordinates coordinates) {
+        if (!board.containsKey(coordinates)) return new Rock();
         return board.get(coordinates);
     }
 
