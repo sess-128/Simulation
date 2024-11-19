@@ -16,7 +16,9 @@ public class BoardRender {
         int COLUMNS = board.getWidth();
 
         for (int row = ROWS - 1; row >= 0; row--) {
+
             StringBuilder line = new StringBuilder();
+            System.out.print(row);
             for (int col = 0; col < COLUMNS; col++) {
                 Coordinates coordinates = new Coordinates(row, col);
 
@@ -28,6 +30,7 @@ public class BoardRender {
 
             }
             System.out.println(line);
+
         }
 
     }
