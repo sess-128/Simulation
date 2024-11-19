@@ -27,31 +27,49 @@ public class FindPath {
         }
         return neighbourCells;
     }
-    public void BFS(Coordinates start, Set<CoordinatesShift> movesPattern){
-        Coordinates current = start;
-        Set<Coordinates> neighbours = findNeighbours(current, movesPattern);
-
-        queue.add(current);
-        visited.add(current);
-        parents.put(current,null);
+    public Map<Coordinates, Coordinates> BFS(Coordinates start, Set<CoordinatesShift> movesPattern){
+        queue.add(start);
+        visited.add(start);
+        parents.put(start,null);
 
         while (!queue.isEmpty()){
+            Coordinates current = queue.poll();
+            Set<Coordinates> neighbours = findNeighbours(current,movesPattern);
             for (Coordinates next : neighbours){
                 if (!visited.contains(next)) {
                     queue.add(next);
                     visited.add(next);
                     parents.put(next, current);
-
-                    current = next;
-                    neighbours = findNeighbours(next,movesPattern);
-
                 }
             }
-            queue.poll();
         }
-        System.out.println("Очередь" + queue);
-        System.out.println("Посещенные" + visited);
-        System.out.println("Родители" + parents);
+        return parents;
+    }
 
+    /**
+     *  Текущая - 2.2
+     *  Получаем соседей
+     *  Для каждого соседа записываем что его родитель -> текущая
+     *  map.put(сосед, текущая)
+     */
+    public void findWayBack(Map<Coordinates, Coordinates> way, Coordinates end) {
+        Stack<Coordinates> movesBack = new Stack<>();
+        Coordinates current = end;
+        int movesCounter = 0;
+        
+        while (current!=null){
+            movesBack.push(current);
+            current = way.get(current);
+            movesCounter++;
+        }
+
+        while (!movesBack.isEmpty()){
+            System.out.print(movesBack.pop());
+            if (!movesBack.isEmpty()){
+                System.out.print("->");
+            }
+        }
+
+        System.out.println("Пройдено узлов: " + movesCounter);
     }
 }
