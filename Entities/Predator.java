@@ -26,7 +26,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    protected boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
+    public boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
         return  (board.isEmptyCoordinates(coordinates) || board.getEntity(coordinates).type.equals(target));
     }
 }

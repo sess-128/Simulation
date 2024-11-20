@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Herbivore extends Creature {
-//    private final EntityType target = EntityType.GRASS;
     public Herbivore(int health, int speed) {
         super(EntityType.HERBIVORE, health, speed);
         setTarget(EntityType.GRASS);
@@ -26,7 +25,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    protected boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
-        return  (board.isEmptyCoordinates(coordinates) || board.getEntity(coordinates).type.equals(target));
+    public boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
+        return  (board.isEmptyCoordinates(coordinates) || board.getEntity(coordinates).type.equals(this.getTarget()));
     }
 }

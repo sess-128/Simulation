@@ -3,16 +3,19 @@ package CloneSim.Entities;
 import CloneSim.Board.Board;
 import CloneSim.Coordinates;
 import CloneSim.CoordinatesShift;
+import CloneSim.findPath.FindPath;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 public abstract class Creature extends Entity {
     private static final int DEAD_HEALTH = 0;
-    protected int health;
-    protected int speed;
-    protected EntityType target;
+    private int health;
+    private final int speed;
+    private EntityType target;
+
 
     public Creature(EntityType type, int health, int speed) {
         super(type);
@@ -35,11 +38,44 @@ public abstract class Creature extends Entity {
         }
 
 //        System.out.println("Сдвинулся с " + currentCoordinates + " на " + newCoordinates);
-    };
-    protected abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
+    }
+
+    ;
+
+
+    public void makeMoveBFS(Board board) {
+        FindPath findPath = new FindPath(board);
+        Coordinates current = getCurrentCoordinates(board);
+
+
+            for (Coordinates target : targetNear(board)) {
+                Map<Coordinates, Coordinates> bfs = findPath.BFSv2(current, target, getCreatureMoves());
+                findPath.findClosestWay(bfs, target);
+            }
+
+
+
+
+    }
+
+    private Set<Coordinates> targetNear(Board board) {
+        Set<Coordinates> targetCoordinates = new HashSet<>();
+
+        for (Coordinates coordinates : board.getBoard().keySet()) {
+            if (board.getEntity(coordinates).type.equals(target)) {
+                targetCoordinates.add(coordinates);
+            }
+        }
+        return targetCoordinates;
+    }
+
+
+    public abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
+
     public abstract Set<CoordinatesShift> getCreatureMoves();
+
     public Coordinates getCurrentCoordinates(Board board) {
-        Coordinates current = new Coordinates(0,0);
+        Coordinates current = new Coordinates(0, 0);
         for (Coordinates coordinates : board.getBoard().keySet()) {
             if (board.getBoard().get(coordinates) == this) {
                 current = coordinates;
@@ -56,6 +92,7 @@ public abstract class Creature extends Entity {
         int randomIndex = random.nextInt(availableMoves.size());
         return (Coordinates) availableMoves.toArray()[randomIndex];
     }
+
     public Set<Coordinates> getAvailableMoves(Board board) {
         Coordinates current = getCurrentCoordinates(board);
         Set<CoordinatesShift> shifts = getCreatureMoves();
@@ -63,10 +100,9 @@ public abstract class Creature extends Entity {
 
 
         for (CoordinatesShift shift : shifts) {
-
-            if (current.canShift(shift, board)){
+            if (current.canShift(shift, board)) {
                 Coordinates newCoordinates = current.shift(shift);
-                if (isPlaceAvailableForMove(newCoordinates, board)){
+                if (isPlaceAvailableForMove(newCoordinates, board)) {
                     availableMoves.add(newCoordinates);
                 }
             }
@@ -74,12 +110,15 @@ public abstract class Creature extends Entity {
 
         return availableMoves;
     }
-    public void setTarget(EntityType target){
+
+    public void setTarget(EntityType target) {
         this.target = target;
     }
-    public EntityType getTarget(){
+
+    public EntityType getTarget() {
         return target;
     }
+
     public int getHealth() {
         return health;
     }
@@ -90,29 +129,21 @@ public abstract class Creature extends Entity {
 
     //TODO ЛОГИКА ЕДЫ
 
-    private Set<Coordinates> targetNear(Board board){
-        Set<Coordinates> targetCoordinates = new HashSet<>();
 
-        for (Coordinates coordinates: getAvailableMoves(board)){
-            if (board.getEntity(coordinates).type.equals(target)){
-                targetCoordinates.add(coordinates);
-            }
-        }
-        return targetCoordinates;
-    }
-    public void decrementHP(){
+    public void decrementHP() {
         health--;
     }
-    public void incrementHP(){
+
+    public void incrementHP() {
         health++;
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return health == DEAD_HEALTH;
     }
 
-    private void eat(Board board){
-        if (targetNear(board).isEmpty()){
+    private void eat(Board board) {
+        if (targetNear(board).isEmpty()) {
             makeMove(board);
         } else {
 
