@@ -5,10 +5,7 @@ import CloneSim.Coordinates;
 import CloneSim.CoordinatesShift;
 import CloneSim.findPath.FindPath;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Creature extends Entity {
     private static final int DEAD_HEALTH = 0;
@@ -36,8 +33,6 @@ public abstract class Creature extends Entity {
 
             decrementHP();
         }
-
-//        System.out.println("Сдвинулся с " + currentCoordinates + " на " + newCoordinates);
     }
 
     ;
@@ -47,18 +42,30 @@ public abstract class Creature extends Entity {
         FindPath findPath = new FindPath(board);
         Coordinates current = getCurrentCoordinates(board);
 
+        ArrayList<Stack<Coordinates>> awe = new ArrayList<>();
 
-            for (Coordinates target : targetNear(board)) {
-                Map<Coordinates, Coordinates> bfs = findPath.BFSv2(current, target, getCreatureMoves());
-                findPath.findClosestWay(bfs, target);
+
+
+        for (Coordinates target : getTargetsCoordinates(board)) {
+            Map<Coordinates, Coordinates> bfs = findPath.BFS(current, target, getCreatureMoves());
+            awe.add(findPath.findClosestWay(bfs, target));
+        }
+
+        if (!awe.isEmpty()) {
+            Stack<Coordinates> shortest = awe.get(0);
+
+            for (Stack<Coordinates> coordinates : awe) {
+                if (coordinates.size() < shortest.size()) {
+                    shortest = coordinates;
+                }
             }
-
-
+            System.out.println(shortest + " Количество ходов: " + shortest.size());
+        }
 
 
     }
 
-    private Set<Coordinates> targetNear(Board board) {
+    private Set<Coordinates> getTargetsCoordinates(Board board) {
         Set<Coordinates> targetCoordinates = new HashSet<>();
 
         for (Coordinates coordinates : board.getBoard().keySet()) {
@@ -143,7 +150,7 @@ public abstract class Creature extends Entity {
     }
 
     private void eat(Board board) {
-        if (targetNear(board).isEmpty()) {
+        if (getTargetsCoordinates(board).isEmpty()) {
             makeMove(board);
         } else {
 
