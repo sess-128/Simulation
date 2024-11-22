@@ -15,9 +15,10 @@ public class PatherTester {
 //        board.add(new Coordinates(2,1), new Tree());
 //        board.add(new Coordinates(2,2), new Tree());
 //        board.add(new Coordinates(2,3), new Tree());
-//        board.add(new Coordinates(2,4), new Tree());
-        board.add(new Coordinates(4,4), new Herbivore(5,5));
-        board.add(new Coordinates(2,4), new Predator(10,2, 5));
+//        board.add(new Coordinates(1,3), new Grass());
+//        board.add(new Coordinates(5,4), new Herbivore(5,5));
+        board.add(new Coordinates(2,4), new Herbivore(5,5));
+        board.add(new Coordinates(1,4), new Predator(10,2, 5));
 
 
         render.show(board);

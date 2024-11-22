@@ -39,6 +39,9 @@ public class FindPath {
 
         while (!queue.isEmpty()){
             Coordinates current = queue.poll();
+            if (current.equals(target)) {
+                break; // Цель найдена
+            }
             Set<Coordinates> neighbours = findNeighbours(current, target, movesPattern);
             for (Coordinates next : neighbours){
                 if (!visited.contains(next)) {
@@ -47,6 +50,13 @@ public class FindPath {
                     parents.put(next, current);
                 }
             }
+        }
+        if (!visited.contains(target)) {
+            parents.clear();
+            System.out.println(parents);
+            System.out.println("Цель недоступна из текущей позиции."); // Сообщаем о недоступности
+            return parents;
+
         }
         return parents;
     }
