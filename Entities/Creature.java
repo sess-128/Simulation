@@ -35,31 +35,39 @@ public abstract class Creature extends Entity {
         }
     }
 
-    ;
+    public void makeMoveBFS(Board board){
+        BFSSS(board);
+    }
 
 
-    public void makeMoveBFS(Board board) {
+    public void BFSSS(Board board) {
         FindPath findPath = new FindPath(board);
         Coordinates current = getCurrentCoordinates(board);
 
-        ArrayList<Stack<Coordinates>> awe = new ArrayList<>();
+        ArrayList<Deque<Coordinates>> paths = new ArrayList<>();
+        Deque<Coordinates> shortestPath;
 
 
 
         for (Coordinates target : getTargetsCoordinates(board)) {
             Map<Coordinates, Coordinates> bfs = findPath.BFS(current, target, getCreatureMoves());
-            awe.add(findPath.findClosestWay(bfs, target));
+            if (bfs.isEmpty()){
+                getRandomMove(getAvailableMoves(board), board);
+            }
+            paths.add(findPath.reverseWay(bfs, target));
         }
 
-        if (!awe.isEmpty()) {
-            Stack<Coordinates> shortest = awe.get(0);
+        if (!paths.isEmpty()) {
+            shortestPath = paths.get(0);
 
-            for (Stack<Coordinates> coordinates : awe) {
-                if (coordinates.size() < shortest.size()) {
-                    shortest = coordinates;
+            for (Deque<Coordinates> next : paths) {
+                if (next.size() < shortestPath.size()) {
+                    shortestPath = next;
                 }
             }
-            System.out.println(shortest + " Количество ходов: " + shortest.size());
+            System.out.println(shortestPath + " Количество ходов: " + shortestPath.size());
+
+//            System.out.println(shortestPath.peekFirst());
         }
 
 

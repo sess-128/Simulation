@@ -12,12 +12,13 @@ public class FindPath {
     private final Queue<Coordinates> queue = new ArrayDeque<>();
     private final Set<Coordinates> visited = new HashSet<>();
     private final Map<Coordinates, Coordinates> parents = new HashMap<>();
+    private final ArrayList<Deque<Coordinates>> paths = new ArrayList<>();
 
     public FindPath(Board board) {
         this.board = board;
     }
 
-    public Set<Coordinates> findNeighbours(Coordinates start, Coordinates target,  Set<CoordinatesShift> pattern) {
+    private Set<Coordinates> findNeighbours(Coordinates start, Coordinates target, Set<CoordinatesShift> pattern) {
         Set<Coordinates> neighbourCells = new HashSet<>();
         EntityType targetType = board.getEntity(target).getType();
 
@@ -32,18 +33,18 @@ public class FindPath {
         return neighbourCells;
     }
 
-    public Map<Coordinates, Coordinates> BFS(Coordinates start,Coordinates target, Set<CoordinatesShift> movesPattern) {
+    public Map<Coordinates, Coordinates> BFS(Coordinates start, Coordinates target, Set<CoordinatesShift> movesPattern) {
         queue.add(start);
         visited.add(start);
-        parents.put(start,null);
+        parents.put(start, null);
 
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Coordinates current = queue.poll();
             if (current.equals(target)) {
-                break; // Цель найдена
+                break;
             }
             Set<Coordinates> neighbours = findNeighbours(current, target, movesPattern);
-            for (Coordinates next : neighbours){
+            for (Coordinates next : neighbours) {
                 if (!visited.contains(next)) {
                     queue.add(next);
                     visited.add(next);
@@ -53,29 +54,33 @@ public class FindPath {
         }
         if (!visited.contains(target)) {
             parents.clear();
-            System.out.println(parents);
-            System.out.println("Цель недоступна из текущей позиции."); // Сообщаем о недоступности
             return parents;
 
         }
         return parents;
     }
 
-    public Stack<Coordinates> findClosestWay(Map<Coordinates, Coordinates> way, Coordinates end) {
+    public Deque<Coordinates> reverseWay(Map<Coordinates, Coordinates> way, Coordinates target) {
         Stack<Coordinates> movesBack = new Stack<>();
-        Coordinates current = end;
+        Deque<Coordinates> movesForward = new ArrayDeque<>();
+        Coordinates current = target;
 
-
+        if (way.isEmpty()) {
+            return movesForward;
+        }
         while (current != null) {
             movesBack.push(current);
             current = way.get(current);
         }
 
-        Stack<Coordinates> movesForward = new Stack<>();
-        while (!movesBack.isEmpty()){
-            movesForward.push(movesBack.pop());
+        while (!movesBack.isEmpty()) {
+            movesForward.addLast(movesBack.pop());
         }
 
         return movesForward;
+    }
+
+    public void findClosestWay(){
+
     }
 }
