@@ -13,6 +13,7 @@ public class FindPath {
     private final Set<Coordinates> visited = new HashSet<>();
     private final Map<Coordinates, Coordinates> parents = new HashMap<>();
     private final ArrayList<Deque<Coordinates>> paths = new ArrayList<>();
+    private Deque<Coordinates> shortestPath = new ArrayDeque<>();
 
     public FindPath(Board board) {
         this.board = board;
@@ -33,7 +34,7 @@ public class FindPath {
         return neighbourCells;
     }
 
-    public Map<Coordinates, Coordinates> BFS(Coordinates start, Coordinates target, Set<CoordinatesShift> movesPattern) {
+    public Deque<Coordinates> BFS(Coordinates start, Coordinates target, Set<CoordinatesShift> movesPattern) {
         queue.add(start);
         visited.add(start);
         parents.put(start, null);
@@ -53,20 +54,22 @@ public class FindPath {
             }
         }
         if (!visited.contains(target)) {
-            parents.clear();
-            return parents;
+            shortestPath.clear();
+            return shortestPath;
 
         }
-        return parents;
+        reverseWay(parents, target);
+        findWayToTarget();
+        return shortestPath;
     }
 
-    public Deque<Coordinates> reverseWay(Map<Coordinates, Coordinates> way, Coordinates target) {
+    public void reverseWay(Map<Coordinates, Coordinates> way, Coordinates target) {
         Stack<Coordinates> movesBack = new Stack<>();
         Deque<Coordinates> movesForward = new ArrayDeque<>();
         Coordinates current = target;
 
         if (way.isEmpty()) {
-            return movesForward;
+            paths.clear();
         }
         while (current != null) {
             movesBack.push(current);
@@ -77,10 +80,21 @@ public class FindPath {
             movesForward.addLast(movesBack.pop());
         }
 
-        return movesForward;
+        paths.add(movesForward);
     }
 
-    public void findClosestWay(){
+    public void findWayToTarget(){
+        if (!paths.isEmpty()) {
+            shortestPath = paths.get(0);
 
+            for (Deque<Coordinates> next : paths) {
+                if (next.size() < shortestPath.size()) {
+                    shortestPath = next;
+                }
+            }
+        }
     }
+
+
+
 }

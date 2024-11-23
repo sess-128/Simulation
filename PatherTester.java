@@ -22,12 +22,12 @@ public class PatherTester {
         board.add(new Coordinates(1,4), new Predator(10,2, 5));
 
 
-        render.show(board);
+
 
         for (Creature creature : board.getCreatures()){
-            creature.BFSSS(board);
+            creature.makeMoveBFS(board);
         }
-
+        render.show(board);
 
     } 
 }

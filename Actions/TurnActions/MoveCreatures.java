@@ -12,7 +12,7 @@ public class MoveCreatures extends Action {
     @Override
     public void interact() {
         for (Creature creature : board.getCreatures()){
-            creature.BFSSS(board);
+            creature.makeMoveBFS(board);
         }
     }
 }
