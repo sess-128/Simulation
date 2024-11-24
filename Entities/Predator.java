@@ -68,4 +68,14 @@ public class Predator extends Creature {
     public void attack() {
         System.out.println("Я атаковал как волк");
     }
+
+    public void targetAround(Board board){
+        Set<CoordinatesShift> creatureMoves = getCreatureMoves();
+        Coordinates current = getCurrentCoordinates(board);
+
+        for (CoordinatesShift creatureMove : creatureMoves) {
+            board.getEntity(current.shift(creatureMove)).getType().equals(this.getTarget());
+        }
+
+    }
 }
