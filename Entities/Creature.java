@@ -9,8 +9,8 @@ import java.util.*;
 
 public abstract class Creature extends Entity {
     private static final int DEAD_HEALTH = 0;
-    private int health;
     private final int speed;
+    private int health;
     private EntityType target;
 
 
@@ -21,32 +21,59 @@ public abstract class Creature extends Entity {
     }
 
     public void makeMove(Board board) {
-        for (int i = 0; i < speed; i++) {
-            Set<Coordinates> availableMoves = getAvailableMoves(board);
+        Deque<Coordinates> moves = findSteps(board);
 
-            Coordinates currentCoordinates = getCurrentCoordinates(board);
-            Coordinates newCoordinates = getRandomMove(availableMoves, board);
+        Coordinates start = moves.poll();
+        Entity entity = board.getEntity(start);
 
-            board.remove(currentCoordinates);
-            board.remove(newCoordinates);
-            board.add(newCoordinates, this);
 
-            decrementHP();
+
+
+        board.remove(start);
+
+
+        Coordinates nextPosition = moves.poll();
+        Set<Coordinates> targetsCoordinates = getTargetsCoordinates(board);
+
+
+        if (targetsCoordinates.contains(nextPosition)){
+            if (this instanceof Herbivore){
+
+            }
+            if (this instanceof Predator){
+
+            }
         }
+        board.add(nextPosition, entity);
+
+
+
     }
 
-    public void makeMoveBFS(Board board) {
+    public Deque<Coordinates> findSteps(Board board) {
         FindPath findPath = new FindPath(board);
+
+        Set<Coordinates> targetsCoordinates = getTargetsCoordinates(board);
         Coordinates current = getCurrentCoordinates(board);
         Set<CoordinatesShift> moves = getCreatureMoves();
 
-        Deque<Coordinates> bfs = new ArrayDeque<>();
+        Deque<Coordinates> steps;
 
-        for (Coordinates target : getTargetsCoordinates(board)) {
-            bfs = findPath.BFS(current, target, moves);
 
+        for (Coordinates target : targetsCoordinates) {
+            steps = findPath.BFS(current, target, moves);
+            if (!steps.isEmpty()) {
+                return steps;
+            }
         }
-        System.out.println(bfs);
+
+        Coordinates randomMove = getRandomMove(getAvailableMoves(board), board);
+        steps = new ArrayDeque<>();
+
+        steps.push(randomMove);
+        steps.push(current);
+
+        return steps;
     }
 
     private Set<Coordinates> getTargetsCoordinates(Board board) {
@@ -59,9 +86,6 @@ public abstract class Creature extends Entity {
         }
         return targetCoordinates;
     }
-
-
-    public abstract boolean isPlaceAvailableForMove(Coordinates coordinates, Board board);
 
     public abstract Set<CoordinatesShift> getCreatureMoves();
 
@@ -84,42 +108,29 @@ public abstract class Creature extends Entity {
         return (Coordinates) availableMoves.toArray()[randomIndex];
     }
 
-    public Set<Coordinates> getAvailableMoves(Board board) {
+    protected Set<Coordinates> getAvailableMoves(Board board) {
         Coordinates current = getCurrentCoordinates(board);
-        Set<CoordinatesShift> shifts = getCreatureMoves();
         Set<Coordinates> availableMoves = new HashSet<>();
-
-
-        for (CoordinatesShift shift : shifts) {
+        for (CoordinatesShift shift : getCreatureMoves()) {
             if (current.canShift(shift, board)) {
-                Coordinates newCoordinates = current.shift(shift);
-                if (isPlaceAvailableForMove(newCoordinates, board)) {
-                    availableMoves.add(newCoordinates);
+                Coordinates shift1 = current.shift(shift);
+                if (board.isEmptyCoordinates(shift1) || board.getEntity(shift1).getType().equals(target)) {
+                    availableMoves.add(shift1);
                 }
             }
         }
-
         return availableMoves;
     }
 
-    public void setTarget(EntityType target) {
+    protected void setTarget(EntityType target) {
         this.target = target;
     }
-
-    public EntityType getTarget() {
+    public EntityType getTarget(){
         return target;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
 
     //TODO ЛОГИКА ЕДЫ
-
 
     public void decrementHP() {
         health--;
@@ -133,11 +144,4 @@ public abstract class Creature extends Entity {
         return health == DEAD_HEALTH;
     }
 
-    private void eat(Board board) {
-        if (getTargetsCoordinates(board).isEmpty()) {
-            makeMove(board);
-        } else {
-
-        }
-    }
 }

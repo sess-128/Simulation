@@ -1,11 +1,8 @@
 package CloneSim;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Menu {
-    private final Simulation simulation;
-    private final Scanner scanner = new Scanner(System.in);
     public static final String START = "s";
     public static final String NEXT_TURN = "n";
     public static final String PAUSE = "p";
@@ -18,6 +15,8 @@ public class Menu {
             "p - приостановить симуляцию\n" +
             "r - продолжить симуляцию\n" +
             "q - выход");
+    private final Simulation simulation;
+    private final Scanner scanner = new Scanner(System.in);
 
     public Menu(Simulation simulation) {
         this.simulation = simulation;

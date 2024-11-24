@@ -1,7 +1,6 @@
 package CloneSim.Entities;
 
 import CloneSim.Board.Board;
-import CloneSim.Coordinates;
 import CloneSim.CoordinatesShift;
 
 import java.util.HashSet;
@@ -19,13 +18,13 @@ public class Herbivore extends Creature {
         for (int i = -1; i <= 1; i++) {
             if (i == 0) continue;
             result.add(new CoordinatesShift(0, i));
-            result.add(new CoordinatesShift(i,0));
+            result.add(new CoordinatesShift(i, 0));
         }
         return result;
     }
 
-    @Override
-    public boolean isPlaceAvailableForMove(Coordinates coordinates, Board board) {
-        return  (board.isEmptyCoordinates(coordinates) || board.getEntity(coordinates).type.equals(this.getTarget()));
+    public void eat(){
+        System.out.println("Я поел как зайчик");
+        incrementHP();
     }
 }

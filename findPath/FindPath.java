@@ -83,7 +83,7 @@ public class FindPath {
         paths.add(movesForward);
     }
 
-    public void findWayToTarget(){
+    public void findWayToTarget() {
         if (!paths.isEmpty()) {
             shortestPath = paths.get(0);
 
@@ -94,7 +94,6 @@ public class FindPath {
             }
         }
     }
-
 
 
 }

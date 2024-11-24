@@ -5,7 +5,6 @@ import CloneSim.Entities.Creature;
 import CloneSim.Entities.Entity;
 import CloneSim.Entities.Rock;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,11 +14,6 @@ public class Board {
     private static final int STANDARD_WIDTH = 10, STANDARD_HEIGHT = 10;
     private final int width;
     private final int height;
-
-    public HashMap<Coordinates, Entity> getBoard() {
-        return board;
-    }
-
     private final HashMap<Coordinates, Entity> board;
 
     public Board(int width, int height) {
@@ -34,7 +28,11 @@ public class Board {
         this.board = new HashMap<>();
     }
 
-    public int  getHeight() {
+    public HashMap<Coordinates, Entity> getBoard() {
+        return board;
+    }
+
+    public int getHeight() {
         return height;
     }
 
@@ -63,10 +61,10 @@ public class Board {
         return board.values();
     }
 
-    public List<Creature> getCreatures(){
+    public List<Creature> getCreatures() {
         List<Creature> creatures = new ArrayList<>();
-        for (Entity entity : board.values()){
-            if (entity instanceof Creature){
+        for (Entity entity : board.values()) {
+            if (entity instanceof Creature) {
                 creatures.add((Creature) entity);
             }
         }

@@ -8,6 +8,7 @@ public class CoordinatesShift {
         this.rowShift = rowShift;
         this.columnShift = columnShift;
     }
+
     @Override
     public String toString() {
         return "Coordinates{" +

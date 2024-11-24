@@ -13,17 +13,15 @@ public class Coordinates {
         this.column = column;
     }
 
-    public Coordinates shift (CoordinatesShift shift) {
+    public Coordinates shift(CoordinatesShift shift) {
         return new Coordinates(this.row + shift.rowShift, this.column + shift.columnShift);
     }
 
-    public boolean canShift(CoordinatesShift shift, Board board){
+    public boolean canShift(CoordinatesShift shift, Board board) {
         int r = row + shift.rowShift;
         int c = column + shift.columnShift;
-        if ((r < 0)|| (r >= board.getHeight())) return false;
-        if ((c < 0)|| (c >= board.getWidth())) return false;
-
-        return true;
+        if ((r < 0) || (r >= board.getHeight())) return false;
+        return (c >= 0) && (c < board.getWidth());
     }
 
     @Override

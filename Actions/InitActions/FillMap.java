@@ -1,20 +1,20 @@
 package CloneSim.Actions.InitActions;
 
 import CloneSim.Actions.Action;
-import CloneSim.Entities.Entity;
-import CloneSim.Factories.EntityFactory;
-import CloneSim.Entities.EntityType;
 import CloneSim.Board.Board;
+import CloneSim.Entities.Entity;
+import CloneSim.Entities.EntityType;
+import CloneSim.Factories.EntityFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class FillMap extends Action {
     public final static int GRASS_COUNT = 5;
+    public final static int HERBIVORE_COUNT = 5;
     private final static int ROCK_COUNT = 6;
     private final static int TREE_COUNT = 6;
-    public final static int HERBIVORE_COUNT = 5;
-    private final static int PREDATOR_COUNT = 8;
+    private final static int PREDATOR_COUNT = 0;
     private final EntityFactory factory = new EntityFactory();
 
     public FillMap(Board board) {
@@ -29,9 +29,10 @@ public class FillMap extends Action {
             int count = getEntityCountToPlace(value);
             necessaryEntities.addAll(factory.makeMoreEntities(value, count));
         }
-            fill(necessaryEntities);
+        fill(necessaryEntities);
 
     }
+
     private int getEntityCountToPlace(EntityType type) {
         return switch (type) {
             case GRASS -> GRASS_COUNT;

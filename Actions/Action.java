@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.Random;
 
 public abstract class Action {
-    private final Random random = new Random();
     protected final Board board;
+    private final Random random = new Random();
 
     public Action(Board board) {
         this.board = board;
@@ -28,9 +28,9 @@ public abstract class Action {
         }
     }
 
-    private Coordinates getRandomCoordinates(){
+    private Coordinates getRandomCoordinates() {
         int randomRow = random.nextInt(board.getHeight());
         int randomColumn = random.nextInt(board.getWidth());
-        return new Coordinates(randomRow,randomColumn);
+        return new Coordinates(randomRow, randomColumn);
     }
 }

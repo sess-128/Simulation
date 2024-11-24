@@ -27,15 +27,16 @@ public class Simulation {
         fillMap.interact();
     }
 
-    public void nextTurn(){
+    public void nextTurn() {
         System.out.println("Делаю следующий ход");
         boardRender.show(board);
         moveCreatures.interact();
         refillMap.interact();
         showCountMoves();
     }
-    public void startSimulation(){
-        if (running){
+
+    public void startSimulation() {
+        if (running) {
             System.out.println("Симуляция уже запущена");
             return;
         }
@@ -43,7 +44,7 @@ public class Simulation {
         running = true;
 
         simulationThread = new Thread(() -> {
-            while (running){
+            while (running) {
                 nextTurn();
                 try {
                     Thread.sleep(1000);
@@ -55,8 +56,9 @@ public class Simulation {
 
         simulationThread.start();
     }
-    public void pauseSimulation(){
-        if (!running){
+
+    public void pauseSimulation() {
+        if (!running) {
             return;
         }
         System.out.println("Симуляция на паузе");
@@ -69,11 +71,11 @@ public class Simulation {
         }
     }
 
-    public void resumeSimulation(){
+    public void resumeSimulation() {
         running = true;
         System.out.println("Симуляция продолжается");
         simulationThread = new Thread(() -> {
-            while (running){
+            while (running) {
                 nextTurn();
                 try {
                     Thread.sleep(1000);
@@ -86,7 +88,7 @@ public class Simulation {
         simulationThread.start();
     }
 
-    private void showCountMoves(){
+    private void showCountMoves() {
         MOVE_COUNTER++;
         System.out.println("Сделано итераций: " + MOVE_COUNTER);
     }
