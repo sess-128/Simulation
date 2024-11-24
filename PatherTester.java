@@ -24,7 +24,7 @@ public class PatherTester {
 
 
 
-        board.add(new Coordinates(2,2), new Herbivore(5,5));
+        board.add(new Coordinates(2,2), new Herbivore(10,5));
 //        board.add(new Coordinates(8,4), new Herbivore(5,5));
         board.add(new Coordinates(0,0), new Predator(10,2, 5));
 

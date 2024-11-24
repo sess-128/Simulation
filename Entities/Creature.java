@@ -20,35 +20,7 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public void makeMove(Board board) {
-        Deque<Coordinates> moves = findSteps(board);
-
-        Coordinates start = moves.poll();
-        Entity entity = board.getEntity(start);
-
-
-
-
-        board.remove(start);
-
-
-        Coordinates nextPosition = moves.poll();
-        Set<Coordinates> targetsCoordinates = getTargetsCoordinates(board);
-
-
-        if (targetsCoordinates.contains(nextPosition)){
-            if (this instanceof Herbivore){
-
-            }
-            if (this instanceof Predator){
-
-            }
-        }
-        board.add(nextPosition, entity);
-
-
-
-    }
+    public abstract void makeMove(Board board);
 
     public Deque<Coordinates> findSteps(Board board) {
         FindPath findPath = new FindPath(board);
@@ -76,7 +48,7 @@ public abstract class Creature extends Entity {
         return steps;
     }
 
-    private Set<Coordinates> getTargetsCoordinates(Board board) {
+    protected Set<Coordinates> getTargetsCoordinates(Board board) {
         Set<Coordinates> targetCoordinates = new HashSet<>();
 
         for (Coordinates coordinates : board.getBoard().keySet()) {
@@ -129,19 +101,18 @@ public abstract class Creature extends Entity {
         return target;
     }
 
-
     //TODO ЛОГИКА ЕДЫ
 
-    public void decrementHP() {
-        health--;
+    public void decrementHP(int power) {
+        this.health -= power;
     }
 
     public void incrementHP() {
-        health++;
+        this.health++;
     }
 
     public boolean isDead() {
-        return health == DEAD_HEALTH;
+        return this.health == DEAD_HEALTH;
     }
 
 }
