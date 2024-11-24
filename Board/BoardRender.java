@@ -4,7 +4,7 @@ import CloneSim.Coordinates;
 import CloneSim.Entities.Entity;
 
 public class BoardRender {
-    public static final String EMPTY = "\uD83D\uDFEB";
+    public static final String GROUND = "\uD83D\uDFEB";
     public static final String HERBIVORE_PICTURE = "\uD83D\uDE07";
     public static final String PREDATOR_PICTURE = "\uD83D\uDC7F";
     public static final String GRASS_PICTURE = "\uD83C\uDF3C";
@@ -43,7 +43,7 @@ public class BoardRender {
             case GRASS -> result += GRASS_PICTURE;
             case HERBIVORE -> result += HERBIVORE_PICTURE;
             case PREDATOR -> result += PREDATOR_PICTURE;
-            default -> result += EMPTY;
+            default -> result += GROUND;
         }
 
         return result;
@@ -51,7 +51,7 @@ public class BoardRender {
 
     private String colorizeEmptyCoordinates() {
         String result = "";
-        result += EMPTY;
+        result += GROUND;
 
         return result;
     }

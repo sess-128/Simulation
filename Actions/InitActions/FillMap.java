@@ -12,9 +12,9 @@ import java.util.Collection;
 public class FillMap extends Action {
     public final static int GRASS_COUNT = 5;
     public final static int HERBIVORE_COUNT = 5;
-    private final static int ROCK_COUNT = 6;
-    private final static int TREE_COUNT = 6;
-    private final static int PREDATOR_COUNT = 0;
+    private final static int ROCK_COUNT = 10;
+    private final static int TREE_COUNT = 10;
+    private final static int PREDATOR_COUNT = 8;
     private final EntityFactory factory = new EntityFactory();
 
     public FillMap(Board board) {
@@ -40,6 +40,7 @@ public class FillMap extends Action {
             case TREE -> TREE_COUNT;
             case HERBIVORE -> HERBIVORE_COUNT;
             case PREDATOR -> PREDATOR_COUNT;
+            case GROUND -> 0;
         };
     }
 

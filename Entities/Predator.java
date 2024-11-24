@@ -32,24 +32,21 @@ public class Predator extends Creature {
 
         board.remove(start);
 
+
         if (isTargetPosition) {
+            if (!board.isEmptyCoordinates(nextPosition)) {
+                Creature creature = (Creature) board.getEntity(nextPosition);
+                attack();
+                incrementHP();
+                creature.decrementHP(power);
+                if (creature.isDead()) {
+                    board.add(nextPosition, this);
 
-            Creature creature = (Creature) board.getEntity(nextPosition);
-            attack();
-            incrementHP();
-            creature.decrementHP(power);
-            System.out.println("Была атака");
-
-            if (creature.isDead()) {
-                System.out.println("Заяц умер");
-                board.add(nextPosition, this);
-
-            } else {
-                System.out.println("Заяц не умер");
-                board.add(start, this);
+                } else {
+                    board.add(start, this);
+                }
             }
         } else {
-            System.out.println("Зайца нет рядом");
             board.add(nextPosition, this);
         }
     }
@@ -69,13 +66,17 @@ public class Predator extends Creature {
         System.out.println("Я атаковал как волк");
     }
 
-    public void targetAround(Board board){
+    public boolean targetAround(Board board) {
         Set<CoordinatesShift> creatureMoves = getCreatureMoves();
         Coordinates current = getCurrentCoordinates(board);
 
         for (CoordinatesShift creatureMove : creatureMoves) {
-            board.getEntity(current.shift(creatureMove)).getType().equals(this.getTarget());
+            Entity entity = board.getEntity(current.shift(creatureMove));
+            return entity.getType().equals(this.getTarget());
+
+
         }
 
+        return false;
     }
 }
