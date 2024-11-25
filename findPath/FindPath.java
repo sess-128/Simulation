@@ -1,9 +1,9 @@
-package CloneSim.findPath;
+package cloneSim.findPath;
 
-import CloneSim.Board.Board;
-import CloneSim.Coordinates;
-import CloneSim.CoordinatesShift;
-import CloneSim.Entities.EntityType;
+import cloneSim.board.Board;
+import cloneSim.Coordinates;
+import cloneSim.CoordinatesShift;
+import cloneSim.entities.EntityType;
 
 import java.util.*;
 
@@ -25,9 +25,9 @@ public class FindPath {
 
         for (CoordinatesShift shift : pattern) {
             if (start.canShift(shift, board)) {
-                Coordinates shift1 = start.shift(shift);
-                if (board.isEmptyCoordinates(shift1) || board.getEntity(shift1).getType().equals(targetType)) {
-                    neighbourCells.add(shift1);
+                Coordinates shifted = start.shift(shift);
+                if (board.isEmptyCoordinates(shifted) || board.getEntity(shifted).getType().equals(targetType)) {
+                    neighbourCells.add(shifted);
                 }
             }
         }
@@ -63,7 +63,7 @@ public class FindPath {
         return shortestPath;
     }
 
-    public void reverseWay(Map<Coordinates, Coordinates> way, Coordinates target) {
+    private void reverseWay(Map<Coordinates, Coordinates> way, Coordinates target) {
         Stack<Coordinates> movesBack = new Stack<>();
         Deque<Coordinates> movesForward = new ArrayDeque<>();
         Coordinates current = target;
@@ -83,7 +83,7 @@ public class FindPath {
         paths.add(movesForward);
     }
 
-    public void findWayToTarget() {
+    private void findWayToTarget() {
         if (!paths.isEmpty()) {
             shortestPath = paths.get(0);
 

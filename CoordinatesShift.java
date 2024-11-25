@@ -1,4 +1,4 @@
-package CloneSim;
+package cloneSim;
 
 public class CoordinatesShift {
     public final int rowShift;

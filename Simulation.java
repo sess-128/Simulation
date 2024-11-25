@@ -1,16 +1,15 @@
-package CloneSim;
+package cloneSim;
 
-import CloneSim.Actions.InitActions.FillMap;
-import CloneSim.Actions.TurnActions.MoveCreatures;
-import CloneSim.Actions.TurnActions.RefillMap;
-import CloneSim.Board.Board;
-import CloneSim.Board.BoardRender;
+import cloneSim.actions.initActions.FillMap;
+import cloneSim.actions.turnActions.MoveCreatures;
+import cloneSim.actions.turnActions.RefillMap;
+import cloneSim.board.Board;
+import cloneSim.board.BoardRender;
 
 public class Simulation {
     public static int MOVE_COUNTER = 0;
     private final Board board;
     private final BoardRender boardRender;
-    private final FillMap fillMap;
     private final MoveCreatures moveCreatures;
     private final RefillMap refillMap;
 
@@ -20,10 +19,10 @@ public class Simulation {
     public Simulation() {
         this.board = new Board();
         this.boardRender = new BoardRender();
-        this.fillMap = new FillMap(board);
         this.moveCreatures = new MoveCreatures(board);
         this.refillMap = new RefillMap(board);
         this.running = false;
+        FillMap fillMap = new FillMap(board);
         fillMap.interact();
     }
 

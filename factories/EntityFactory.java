@@ -1,6 +1,6 @@
-package CloneSim.Factories;
+package cloneSim.factories;
 
-import CloneSim.Entities.*;
+import cloneSim.entities.*;
 
 import java.util.ArrayList;
 import java.util.Collection;

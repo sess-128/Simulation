@@ -1,8 +1,8 @@
-package CloneSim.Entities;
+package cloneSim.entities;
 
-import CloneSim.Board.Board;
-import CloneSim.Coordinates;
-import CloneSim.CoordinatesShift;
+import cloneSim.board.Board;
+import cloneSim.Coordinates;
+import cloneSim.CoordinatesShift;
 
 import java.util.Deque;
 import java.util.HashSet;
@@ -24,27 +24,38 @@ public class Herbivore extends Creature {
         }
         return result;
     }
-
     @Override
     public void makeMove(Board board) {
-        Deque<Coordinates> moves = findSteps(board);
+        for (int steps = 0; steps < this.getSpeed(); steps++) {
+            Deque<Coordinates> moves = findSteps(board);
 
-        Coordinates start = moves.poll();
+            Coordinates start = moves.poll();
+            Coordinates nextPosition = moves.poll();
+
+            moveAndEat(start, nextPosition, board);
+
+
+        }
+        decrementHP();
+    }
+
+    private void eat() {
+        this.incrementHP();
+    }
+
+    private void moveAndEat(Coordinates start, Coordinates nextPosition, Board board) {
         Entity entity = board.getEntity(start);
 
         board.remove(start);
 
-        Coordinates nextPosition = moves.poll();
+
         Set<Coordinates> targetsCoordinates = getTargetsCoordinates(board);
 
 
-        if (targetsCoordinates.contains(nextPosition)){
+        if (targetsCoordinates.contains(nextPosition)) {
             eat();
         }
         board.add(nextPosition, entity);
     }
-    public void eat(){
-        System.out.println("Я поел как зайчик");
-        incrementHP();
-    }
+
 }

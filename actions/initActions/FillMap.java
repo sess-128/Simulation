@@ -1,10 +1,10 @@
-package CloneSim.Actions.InitActions;
+package cloneSim.actions.initActions;
 
-import CloneSim.Actions.Action;
-import CloneSim.Board.Board;
-import CloneSim.Entities.Entity;
-import CloneSim.Entities.EntityType;
-import CloneSim.Factories.EntityFactory;
+import cloneSim.actions.Action;
+import cloneSim.board.Board;
+import cloneSim.entities.Entity;
+import cloneSim.entities.EntityType;
+import cloneSim.factories.EntityFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;

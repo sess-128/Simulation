@@ -1,6 +1,6 @@
-package CloneSim.Entities;
+package cloneSim.entities;
 
-public class Ground extends Entity{
+public class Ground extends Entity {
 
     public Ground() {
         super(EntityType.GROUND);

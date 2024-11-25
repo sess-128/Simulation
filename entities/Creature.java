@@ -1,9 +1,9 @@
-package CloneSim.Entities;
+package cloneSim.entities;
 
-import CloneSim.Board.Board;
-import CloneSim.Coordinates;
-import CloneSim.CoordinatesShift;
-import CloneSim.findPath.FindPath;
+import cloneSim.board.Board;
+import cloneSim.Coordinates;
+import cloneSim.CoordinatesShift;
+import cloneSim.findPath.FindPath;
 
 import java.util.*;
 
@@ -13,15 +13,13 @@ public abstract class Creature extends Entity {
     private int health;
     private EntityType target;
 
-
     public Creature(EntityType type, int health, int speed) {
         super(type);
         this.health = health;
         this.speed = speed;
     }
-
     public abstract void makeMove(Board board);
-
+    public abstract Set<CoordinatesShift> getCreatureMoves();
     public Deque<Coordinates> findSteps(Board board) {
         FindPath findPath = new FindPath(board);
 
@@ -47,23 +45,9 @@ public abstract class Creature extends Entity {
 
         return steps;
     }
-
-    protected Set<Coordinates> getTargetsCoordinates(Board board) {
-        Set<Coordinates> targetCoordinates = new HashSet<>();
-
-        for (Coordinates coordinates : board.getBoard().keySet()) {
-            if (board.getEntity(coordinates).type.equals(target)) {
-                targetCoordinates.add(coordinates);
-            }
-        }
-        return targetCoordinates;
-    }
-
-    public abstract Set<CoordinatesShift> getCreatureMoves();
-
     public Coordinates getCurrentCoordinates(Board board) {
         Coordinates current = new Coordinates(0, 0);
-        for (Coordinates coordinates : board.getBoard().keySet()) {
+        for (Coordinates coordinates : board.getAllCoordinates()) {
             if (board.getBoard().get(coordinates) == this) {
                 current = coordinates;
                 return current;
@@ -71,15 +55,29 @@ public abstract class Creature extends Entity {
         }
         return current;
     }
-
-    private Coordinates getRandomMove(Set<Coordinates> availableMoves, Board board) {
-        Random random = new Random();
-        if (availableMoves.size() == 0) return this.getCurrentCoordinates(board);
-
-        int randomIndex = random.nextInt(availableMoves.size());
-        return (Coordinates) availableMoves.toArray()[randomIndex];
+    public void decrementHP(int power) {
+        this.health -= power;
     }
+    public void decrementHP() {
+        this.health--;
+    }
+    public void incrementHP() {
+        this.health++;
+    }
+    public int getSpeed(){return this.speed;}
+    public boolean isDead() {
+        return this.health == DEAD_HEALTH;
+    }
+    protected Set<Coordinates> getTargetsCoordinates(Board board) {
+        Set<Coordinates> targetCoordinates = new HashSet<>();
 
+        for (Coordinates coordinates : board.getAllCoordinates()) {
+            if (board.getEntity(coordinates).type.equals(target)) {
+                targetCoordinates.add(coordinates);
+            }
+        }
+        return targetCoordinates;
+    }
     protected Set<Coordinates> getAvailableMoves(Board board) {
         Coordinates current = getCurrentCoordinates(board);
         Set<Coordinates> availableMoves = new HashSet<>();
@@ -93,26 +91,15 @@ public abstract class Creature extends Entity {
         }
         return availableMoves;
     }
-
     protected void setTarget(EntityType target) {
         this.target = target;
     }
-    public EntityType getTarget(){
-        return target;
-    }
+    private Coordinates getRandomMove(Set<Coordinates> availableMoves, Board board) {
+        Random random = new Random();
+        if (availableMoves.size() == 0) return this.getCurrentCoordinates(board);
 
-    //TODO ЛОГИКА ЕДЫ
-
-    public void decrementHP(int power) {
-        this.health -= power;
-    }
-
-    public void incrementHP() {
-        this.health++;
-    }
-
-    public boolean isDead() {
-        return this.health == DEAD_HEALTH;
+        int randomIndex = random.nextInt(availableMoves.size());
+        return (Coordinates) availableMoves.toArray()[randomIndex];
     }
 
 }

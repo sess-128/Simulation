@@ -1,25 +1,17 @@
-package CloneSim.Board;
+package cloneSim.board;
 
-import CloneSim.Coordinates;
-import CloneSim.Entities.*;
+import cloneSim.Coordinates;
+import cloneSim.entities.Creature;
+import cloneSim.entities.Entity;
+import cloneSim.entities.Ground;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Board {
     private static final int STANDARD_WIDTH = 10, STANDARD_HEIGHT = 10;
     private final int width;
     private final int height;
     private final HashMap<Coordinates, Entity> board;
-
-    public Board(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.board = new HashMap<>();
-    }
-
     public Board() {
         this.width = STANDARD_WIDTH;
         this.height = STANDARD_HEIGHT;
@@ -56,7 +48,7 @@ public class Board {
         return !board.containsKey(coordinates);
     }
 
-    public Collection<Entity> getEntities() {
+    public Collection<Entity> getAllEntities() {
         return board.values();
     }
 
@@ -68,5 +60,9 @@ public class Board {
             }
         }
         return creatures;
+    }
+
+    public Set<Coordinates> getAllCoordinates(){
+        return board.keySet();
     }
 }

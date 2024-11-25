@@ -1,4 +1,4 @@
-package CloneSim;
+package cloneSim;
 
 import java.util.Scanner;
 
@@ -8,13 +8,14 @@ public class Menu {
     public static final String PAUSE = "p";
     public static final String RESUME = "r";
     public static final String QUIT = "q";
-    public static final String welcomeMessage = ("Приветствую тебя в симуляции\n" +
-            "вводи букву и нажимай enter\n" +
-            "s - запустить бесконечную симуляцию\n" +
-            "n - следующий ход\n" +
-            "p - приостановить симуляцию\n" +
-            "r - продолжить симуляцию\n" +
-            "q - выход");
+    public static final String welcomeMessage = ("""
+            Приветствую тебя в симуляции
+            вводи букву и нажимай enter
+            s - запустить бесконечную симуляцию
+            n - следующий ход
+            p - приостановить симуляцию
+            r - продолжить симуляцию
+            q - выход""");
     private final Simulation simulation;
     private final Scanner scanner = new Scanner(System.in);
 

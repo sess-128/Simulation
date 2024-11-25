@@ -1,4 +1,4 @@
-package CloneSim.Entities;
+package cloneSim.entities;
 
 public class Rock extends Entity {
 

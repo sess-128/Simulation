@@ -1,17 +1,17 @@
-package CloneSim.Actions.TurnActions;
+package cloneSim.actions.turnActions;
 
-import CloneSim.Actions.Action;
-import CloneSim.Board.Board;
-import CloneSim.Entities.Entity;
-import CloneSim.Entities.EntityType;
-import CloneSim.Entities.Grass;
-import CloneSim.Entities.Herbivore;
-import CloneSim.Factories.EntityFactory;
+import cloneSim.actions.Action;
+import cloneSim.board.Board;
+import cloneSim.entities.Entity;
+import cloneSim.entities.EntityType;
+import cloneSim.entities.Grass;
+import cloneSim.entities.Herbivore;
+import cloneSim.factories.EntityFactory;
 
 import java.util.Collection;
 
-import static CloneSim.Actions.InitActions.FillMap.GRASS_COUNT;
-import static CloneSim.Actions.InitActions.FillMap.HERBIVORE_COUNT;
+import static cloneSim.actions.initActions.FillMap.GRASS_COUNT;
+import static cloneSim.actions.initActions.FillMap.HERBIVORE_COUNT;
 
 public class RefillMap extends Action {
 
@@ -34,8 +34,6 @@ public class RefillMap extends Action {
 
         if (currentGrass <= GRASS_COUNT || currentHerbivore <= HERBIVORE_COUNT) {
             fill(entitiesToRefill);
-//            System.out.println("Creating " + (GRASS_COUNT - currentGrass) + " Grass");
-//            System.out.println("Creating " + (HERBIVORE_COUNT - currentHerbivore) + " Herbivore");
         }
     }
 
@@ -45,7 +43,7 @@ public class RefillMap extends Action {
         int countGrass = 0;
         int countHerbivore = 0;
 
-        for (Entity entity : board.getEntities()) {
+        for (Entity entity : board.getAllEntities()) {
             if (entity instanceof Grass) {
                 countGrass++;
             }

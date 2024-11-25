@@ -1,8 +1,8 @@
-package CloneSim.Actions;
+package cloneSim.actions;
 
-import CloneSim.Board.Board;
-import CloneSim.Coordinates;
-import CloneSim.Entities.Entity;
+import cloneSim.board.Board;
+import cloneSim.Coordinates;
+import cloneSim.entities.Entity;
 
 import java.util.Collection;
 import java.util.Random;
@@ -20,10 +20,10 @@ public abstract class Action {
     protected void fill(Collection<Entity> entities) {
         for (Entity entity : entities) {
 
-            Coordinates randomed = getRandomCoordinates();
+            Coordinates randomCoordinates = getRandomCoordinates();
 
-            while (board.isEmptyCoordinates(randomed)) {
-                board.add(randomed, entity);
+            while (board.isEmptyCoordinates(randomCoordinates)) {
+                board.add(randomCoordinates, entity);
             }
         }
     }

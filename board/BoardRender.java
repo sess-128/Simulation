@@ -1,7 +1,7 @@
-package CloneSim.Board;
+package cloneSim.board;
 
-import CloneSim.Coordinates;
-import CloneSim.Entities.Entity;
+import cloneSim.Coordinates;
+import cloneSim.entities.Entity;
 
 public class BoardRender {
     public static final String GROUND = "\uD83D\uDFEB";
@@ -18,7 +18,7 @@ public class BoardRender {
         for (int row = ROWS - 1; row >= 0; row--) {
 
             StringBuilder line = new StringBuilder();
-            System.out.print(row);
+
             for (int col = 0; col < COLUMNS; col++) {
                 Coordinates coordinates = new Coordinates(row, col);
 
@@ -27,12 +27,9 @@ public class BoardRender {
                 } else {
                     line.append(colorizeEntity(board.getEntity(coordinates)));
                 }
-
             }
             System.out.println(line);
-
         }
-
     }
 
     private String colorizeEntity(Entity entity) {
@@ -45,7 +42,6 @@ public class BoardRender {
             case PREDATOR -> result += PREDATOR_PICTURE;
             default -> result += GROUND;
         }
-
         return result;
     }
 

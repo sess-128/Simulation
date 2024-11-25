@@ -1,4 +1,4 @@
-package CloneSim.Entities;
+package cloneSim.entities;
 
 public class Tree extends Entity {
     public Tree() {
