@@ -43,25 +43,12 @@ public class Board {
         };
         return board.get(coordinates);
     }
-
     public boolean isEmptyCoordinates(Coordinates coordinates) {
         return !board.containsKey(coordinates);
     }
-
     public Collection<Entity> getAllEntities() {
         return board.values();
     }
-
-    public List<Creature> getCreatures() {
-        List<Creature> creatures = new ArrayList<>();
-        for (Entity entity : board.values()) {
-            if (entity instanceof Creature) {
-                creatures.add((Creature) entity);
-            }
-        }
-        return creatures;
-    }
-
     public Set<Coordinates> getAllCoordinates(){
         return board.keySet();
     }
